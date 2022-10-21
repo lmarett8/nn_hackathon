@@ -13,7 +13,7 @@ from PIL import Image
 st.title('Hotdog or not Hotdog?')
 
 st.subheader('\~To hotdog or not to hotdog that is the question\~')
-
+       
 # Grabs a test image
 
 def get_random_image():
