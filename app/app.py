@@ -5,6 +5,7 @@ import numpy as np
 import pathlib
 import random
 import tensorflow as tf
+from resizeimage import resizeimage
 from tensorflow import keras
 
 from PIL import Image
@@ -39,17 +40,35 @@ model = load_model()
 
 # Predicting the image
 
+#Upload an image
+st.subheader("Image")
+image_file = st.file_uploader("Upload Images", type =["png", "jpg", "jpeg"])
+
+if image_file is not None:
+
+    # To See details
+    file_details = {"filename":image_file.name, "filetype":image_file.type,
+                              "filesize":image_file.size}
+    st.write(file_details)
+
+    # To View Uploaded Image
+    image_file = Image.open(image_file)
+    image_file = resizeimage.resize_contain(image_file, [299, 299])
+    image_file = image_file.convert('RGB')
+    
+
 if st.button('Is it a hotdog?'):
     
     # Getting random image to predict and displaying it
+    # image_path = get_random_image()
+    # image = Image.open(image_path)
+
     
-    image_path = get_random_image()
-    image = Image.open(image_path)
-    st.image(image, caption ='random image')
-    st.write(image_path)
+    image = image_file
+    st.image(image)
 
     # transform that data into something the model can use
-    
+
     image_matrix = np.asarray(image)
     image_matrix = np.reshape(image_matrix, newshape=(1,299, 299, 3))
     
