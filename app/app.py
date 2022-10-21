@@ -57,7 +57,7 @@ if image_file is not None:
     image_file = image_file.convert('RGB')
     
 
-if st.button('Is it a hotdog?'):
+if st.button('Is your image a hotdog?'):
     
     # Getting random image to predict and displaying it
     # image_path = get_random_image()
@@ -77,5 +77,22 @@ if st.button('Is it a hotdog?'):
     prob = '' if pred == 1 else 'not '
     st.write(f'Looks like it\'s {prob}a hotdog')
 
+    
+if st.button('Random image test'):
+    
+    # Getting random image to predict and displaying it
+    image_path = get_random_image()
+    image = Image.open(image_path)
+    st.image(image)
+
+    # transform that data into something the model can use
+
+    image_matrix = np.asarray(image)
+    image_matrix = np.reshape(image_matrix, newshape=(1,299, 299, 3))
+    
+    # makes a prediction and reports back to the page
+    pred = int(model.predict(image_matrix)[0][0])
+    prob = '' if pred == 1 else 'not '
+    st.write(f'Looks like it\'s {prob}a hotdog')
 
 
